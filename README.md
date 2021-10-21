@@ -34,6 +34,13 @@ the CVAE decode this sampled noise into a synthetic face of the desired smile de
   <img src="results/encode0.5.png" width="400" /> 
 </p>
 
+## Forcing smiles
+With the trained model, one can use the pictures from the training set and instead of feeding in the  smile-degree encode of the corresponding picture we can fix an encoding or shift it by a factor to force the image a smile/non smile. Below this is done for 32 picture of the training set, on the op the original 32 images are shown, below the reconstruction with their actual encoding, and then we shift the encoding by +0.5, +0.7, -0.5, -0.7 to change the smile degree in the original picture (zoom in to see in detail!). Finally the same diagram is now shown for a single picture.
+
+<img src="results/forcing_smiles_all.png" width="800" />
+
+<img src="results/forcing_smiles_one.png" width="500" />
+
 
 ## The Dataset
 The images of the faces come from [UTKFace Dataset](https://susanqq.github.io/UTKFace/). However the images do not have any encoding of a continuous degree of "smiley-ness". This "smile-strength" degree is produced by creating a slideshow of the images and exposing them to three subjects (me and a couple friends), by registering wheather the face was classified as smiley or non-smiley we encourage the subjects to answer as fast as possible so as to rely on first impression and the reaction time is registered.
@@ -43,8 +50,8 @@ The images of the faces come from [UTKFace Dataset](https://susanqq.github.io/UT
 Altough the range of smile-strength in the training set is [-1,+1], when generating synthetic images we can ask the model to generate outside of the range. But notice that then the synthetic faces become much more homogeneus, more than 64 different people it looks like small variations of the same synthetic image. Below side to side  64 synthetic images for encodings -3 (super not happy), +3 (super happy) are shown produced with this method.
 
 <p float="left">
-  <img src="results/encode-3.png" width="300" />
-  <img src="results/encode3.png" width="300" /> 
+  <img src="results/encode-3.png" width="200" />
+  <img src="results/encode3.png" width="200" /> 
 </p>
 
 
