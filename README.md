@@ -14,12 +14,17 @@ Implementation of CVAE. Trained CVAE on faces from  [UTKFace Dataset](https://su
 3. Install requirements on the Virtual environment ``` python -m pip install -r requirements.txt ```
 
 ## Results
-![Training](results/training.gif)
-![Final_reconstruction](results/cvae/iter_965.png)
-![original](results/cvae/original.png)
+### Training
+In the .gif below the reconstruction for a group of 32 faces from the dataset can be visualized for all epochs.
+![Training](results/cvae_training.gif)
 
-## Play with it
-See the ```Example/example.ipynb ```, play with the encoding value to produce new synthetic faces with the desired smile degree. 
+Below, the final reconstruction of the CVAE for 32 faces of the dataset side by side to those original 32 images, for comparison.
+<p float="left">
+  <img src="results/cvae/iter_965.png" width="400" />
+  <img src="results/cvae/original.png" width="400" /> 
+</p>
+
+### Conditional generation
 
 ## The Dataset
 The images of the faces come from [UTKFace Dataset](https://susanqq.github.io/UTKFace/). However the images do not have any encoding of a continuous degree of "smiley-ness". This "smile-strength" degree is produced by creating a slideshow of the images and exposing them to three subjects (me and a couple friends), by registering wheather the face was classified as smiley or non-smiley we encourage the subjects to answer as fast as possible so as to rely on first impression and the reaction time is registered.
