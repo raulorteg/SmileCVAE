@@ -1,7 +1,7 @@
 # Conditional Smiles! (SmileCVAE)
 
 ## About
-Implementation of AE, VAE and CVAE. Trained CVAE on faces from  [UTKFace Dataset](https://susanqq.github.io/UTKFace/). With an (handmade) encoding of the Smile-strength degree to produce conditional generation of synthetic faces with a given smile degree.
+Implementation of AE, VAE and CVAE. Trained CVAE on faces from  [UTKFace Dataset](https://susanqq.github.io/UTKFace/). Using an encoding of the Smile-strength degree to produce conditional generation of synthetic faces with a given smile degree.
 
 ## Installation
 1. Clone the repository ``` git clone https://github.com/raulorteg/SmileCVAE```
