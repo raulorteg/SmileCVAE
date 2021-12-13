@@ -47,12 +47,16 @@ Below, the final reconstruction of the CVAE for 32 faces of the dataset side by 
 ### Conditional generation
 Using ```synthetic.py```, we can sample from the prior distribution of the CVAE, concatenate the vector with our desired ecnoding of the smile degree and let
 the CVAE decode this sampled noise into a synthetic face of the desired smile degree. The range of smile-degree encodings in the training set is [-1,+1], where
-+1 is most smiley, -1 is most non-smiley. Below side to side  64 synthetic images for encodings -0.5, +0.5 are shown produced with this method.
++1 is most smiley, -1 is most non-smiley. Below side to side  64 synthetic images for encodings -0.5, +0.5 are shown produced with this method for the GrayScale implementation
 
 <p float="left">
   <img src="black_and_white/results/encode-0.5.png" width="400" />
   <img src="black_and_white/results/encode0.5.png" width="400" /> 
 </p>
+
+Below 4 images are sampled for every 0.1 increment in between [-1,1] for the RGB case, showcasing the synthetic image generation potential. Notice how the synthetic images are more varied for encodings around [-0.7,-0.5] and [0.5, 0.7]. Which is the region with highest counts of samples in the dataset.
+
+<img src="figures/all_synthetic.png" width="800" />
 
 ## Forcing smiles
 With the trained model, one can use the pictures from the training set and instead of feeding in the  smile-degree encode of the corresponding picture we can fix an encoding or shift it by a factor to force the image a smile/non smile. Below this is done for 32 picture of the training set, on the op the original 32 images are shown, below the reconstruction with their actual encoding, and then we shift the encoding by +0.5, +0.7, -0.5, -0.7 to change the smile degree in the original picture (zoom in to see in detail!). Finally the same diagram is now shown for a single picture.
@@ -62,16 +66,20 @@ With the trained model, one can use the pictures from the training set and inste
 <img src="black_and_white/results/forcing_smiles_one.png" width="500" />
 
 ## Probing the Latent Space
-The RGB implementation used a latent space of dimension 20 and thus can't be directly represented. During training for every epoch the variance across every dimension is computed in an online approach using Welford's algorithm, this can be used to see which dimensions of the latent space are mostly used. In the plots below a heatmap is shown for the variance of the latent space across the first 50 epochs (left), last 50 epochs (middle) and all training (right) by showing only one in every 20 epochs.
+The RGB implementation used a latent space of dimension 20 and thus can't be directly represented. During training for every epoch the variance across every dimension is computed in an online approach using Welford's algorithm, this can be used to see which dimensions of the latent space are mostly used. In the plots below a heatmap is shown for the variance of the latent space across the first 50 epochs (left), last 50 epochs (right) and all training (bottom) by showing only one in every 20 epochs.
 <p float="center">
-  <img src="results/plots/latent_var_first_50.png" width="200" />
-  <img src="results/plots/latent_var_last_50.png" width="200" />
-  <img src="results/plots/latent_var.png" width="200" />
+  <img src="results/plots/latent_var_first_50.png" width="400" />
+  <img src="results/plots/latent_var_last_50.png" width="400" />
+  <img src="results/plots/latent_var.png" width="700" />
 </p>
 
 Here we can see how the usage of the Latent space changes as the model learn to reconstruct the data. At the beggining it uses all the latent space but at the the end there are dimensions that are much more used than others, notice th horizontal white lines. Using this plot then we can sample the latent space uniformly across some given dimension. By fixing all other dimensions to value 0.0 and moving uniformly some dimension and decode the samples into images we can visualize what each component is doing, roughly. Since there are a lot of dimensions we can use the latent variance plot to select the most important ones and then using this method visualize their effect.
 
-<img src="figures/decoding_latent.png" width="700" />
+<img src="figures/latent_explained.png" width="700" />
+
+In the figure above some of the most important/active dimensions can be visualize and interpreted. Note the difference with the 19th dimension, displayed to show how a dimension with low variance when sampled doesn't change much te reconstruction. Finally, by proving the last dimension in the latent space, which is not shown in the plot because its the dimension concatenated before feeding the decoder, we reconstruct a continuum of the conditional variable. See image below, whcih should be read from left to right, from top to bottom.
+
+<img src="results/axis/axis_20.png" width="400" />
 
 ## The Dataset
 The images of the faces come from [UTKFace Dataset](https://susanqq.github.io/UTKFace/). However the images do not have any encoding of a continuous degree of "smiley-ness". This "smile-strength" degree is produced by creating a slideshow of the images and exposing them to three subjects (me and a couple friends), by registering wheather the face was classified as smiley or non-smiley we encourage the subjects to answer as fast as possible so as to rely on first impression and the reaction time is registered.
