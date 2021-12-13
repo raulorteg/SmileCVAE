@@ -81,6 +81,20 @@ In the figure above some of the most important/active dimensions can be visualiz
 
 <img src="results/axis/axis_20.png" width="400" />
 
+Although there are a number of dimensions really active it might be the case that there is some correlation between them. By performing a forward pass on the training data and saving the latent representations of all the data we can then inspect further the latent space. By plotting a histogram of the values of every dimension we obtain the following graph:
+
+<img src="figures/latent_forward.png" width="400" />
+
+Which as expected has gaussian shape for every dimension. One can also see perform PCA on the latent representation to find the principal components to explain all the variance on the data and then instead of decoding the images while varying a value along each of the original dimensions, we can decode images while moving in the each of the dimensions in the PCA transformed data, which are linear combinations of the original dimensions, in the hopes that in this representation of the latent space the "new" dimensions can be decoded into images whose variation is more easily interpretable. The results of this experiment can be found at ``` results/axis/pca_axis_*``` and the top 8 components can be seen in the figure below.
+
+<img src="figures/pca_axis.png" width="800" />
+
+An interesting highlight, in the 12th transformed dimension the component seems to model something that looks like beard, see the figure below:
+
+<img src="figures/pca_axis_12_beard.PNG" width="600" />
+
+
+
 ## The Dataset
 The images of the faces come from [UTKFace Dataset](https://susanqq.github.io/UTKFace/). However the images do not have any encoding of a continuous degree of "smiley-ness". This "smile-strength" degree is produced by creating a slideshow of the images and exposing them to three subjects (me and a couple friends), by registering wheather the face was classified as smiley or non-smiley we encourage the subjects to answer as fast as possible so as to rely on first impression and the reaction time is registered.
 
