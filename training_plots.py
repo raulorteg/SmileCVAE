@@ -88,6 +88,7 @@ def plot_latent_variance():
                 latent_buffer.append(line.replace("]",""))
             
     latent = np.array(latent, dtype=float)
+    np.savetxt("results/latent.txt", latent)
 
     # latent variance on first 50 epochs
     var_epochs = latent[0:50].T
